@@ -72,32 +72,52 @@ def remove_row(file_name):
 
 def standart_write(file_name, res):
     with open(file_name, 'w', encoding='utf-8') as data:
-    f_w = DictWriter(data, fieldnames=['first_name', 'second_name',
+        f_w = DictWriter(data, fieldnames=['first_name', 'second_name',
                                             'phone_number'])
-    f_w.writeheader()
-    f_w.writerows(res)
+        f_w.writeheader()
+        f_w.writerows(res)
+    
+
+def copy_data(file_name):
+    res = read_file(file_name)
+    copy_file_name = 'phone_1.csv'
+    create_file(copy_file_name)
+    standart_write(copy_file_name, res)
 
 
 file_name = 'phone.csv'
 def main():
     while True:
         command = input('Введите команду: ')
-        if command == 'q':
+        if command == 'q': #выход из программы
             break
-        elif command == 'w':
+        elif command == 'w': #запись данных
             if not exists(file_name):
                 create_file(file_name)
             write_file(file_name)
-        elif command == 'r':
+        elif command == 'r': #чтение данных
             if not exists(file_name):
                 print('Файл отсутствует, создайте его.')
                 continue
             print(*read_file(file_name))
-        elif command == 'd':
+        elif command == 'd': #удаление строк данных
             if not exists(file_name):
                 print('Файл отсутствует, создайте его.')
                 continue
             remove_row(file_name)
+        elif command == 'c': #копирование файла
+            if not exists(file_name):
+                print('Файл отсутствует, создайте его.')
+            copy_data(file_name)
             
 
 main()
+
+
+"""
+реализовать копирование данных из файла А в файл В
+написать функцию copy_data
+прочитать список словарей (read_file)
+и записать его в новый файл, используя функцию standart_write
+дополнить функцию main
+"""
