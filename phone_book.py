@@ -13,10 +13,27 @@
 from csv import DictReader, DictWriter
 from os.path import exists #проверка на существование
 
+class NameError(Exception):
+    def __init__(self, txt):
+        self.txt = txt
+
 def get_info():
-    first_name = 'Иван'
-    second_name = 'Иванов'
-    phone_number = 89122536167372
+    flag = False
+    while not flag:
+        try:
+            first_name = input('Введите имя: ')
+            if len(first_name) < 2:
+                raise NameError('Слишком короткое имя.')
+            second_name = input('Введите фамилию: ')
+            if len(second_name) < 4:
+                raise NameError('Слишком короткая фамилия.')
+            phone_number = input('Введите номер телефона: ')
+            if len(phone_number) < 11:
+                raise NameError('Слишком короткий номер телефона.')
+        except NameError as err:
+            print (err)
+        else:
+            flag = True
     return [first_name, second_name, phone_number]
 
 
