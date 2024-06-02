@@ -80,9 +80,16 @@ def standart_write(file_name, res):
 
 def copy_data(file_name):
     res = read_file(file_name)
-    copy_file_name = 'phone_1.csv'
-    create_file(copy_file_name)
-    standart_write(copy_file_name, res)
+    copy_file_name = input(
+        'Введите имя файла, в который необходимо скопировать строку: ')
+    if not exists(copy_file_name):
+        create_file(copy_file_name)
+    search = int(input('Введите номер строки для копирования: '))
+    if search <= len(res):
+        res_copy = res[search-1]
+        standart_write(copy_file_name, [res_copy])
+    else:
+        print('Введен неверный номер строки!')
 
 
 file_name = 'phone.csv'
