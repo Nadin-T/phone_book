@@ -76,6 +76,18 @@ def standart_write(file_name, res):
                                             'phone_number'])
         f_w.writeheader()
         f_w.writerows(res)
+        
+def change_data(file_name):
+    search = int(input('Введите номер строки для изменения: '))
+    res = read_file(file_name)
+    while search - 1 > len(res):
+        raise IndexError('Данной строки не существует.')
+    user_data = get_info()
+    new_obj = {'first_name': user_data[0], 'second_name': user_data[1], 
+               'phone_number': user_data[2]}
+
+    res[search-1] = new_obj
+    standart_write(file_name, res)   
     
 
 def copy_data(file_name):
@@ -100,6 +112,7 @@ def main():
             '\nДля записи нового пользователя введите "w".'
             '\nДля просмотра телефонной книги введите "r".'
             '\nДля удаления пользователя из списка введите "d".'
+            '\nДля изменения пользователя из списка введите "t".'
             '\nДля копирования пользователя в новый файл введите "c".'
             '\nНажмите "q", если хотите завершить работу с программой.'
             )
@@ -119,7 +132,11 @@ def main():
             if not exists(file_name):
                 print('Файл отсутствует, создайте его.')
                 continue
-            remove_row(file_name)
+        elif command == 't': #изменение строк данных
+            if not exists(file_name):
+                print('Файл отсутствует, создайте его.')
+                continue
+            change_data(file_name)
         elif command == 'c': #копирование файла
             if not exists(file_name):
                 print('Файл отсутствует, создайте его.')
